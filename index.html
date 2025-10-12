@@ -4,13 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>สมุดนิทาน Mascot</title>
+
+<!-- CSS -->
 <link rel="stylesheet" href="css/style.css">
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Turn.js -->
-<script src="js/turn.min.js"></script>
+<!-- Turn.js ผ่าน CDN -->
+<script src="https://cdn.jsdelivr.net/gh/blasten/turn.js/turn.min.js"></script>
 </head>
 <body>
 
@@ -19,7 +21,7 @@
   <div class="page">
     <img src="images/cover.png" alt="ปกสมุด">
   </div>
-  
+
   <!-- หน้า 2: สารบัญ -->
   <div class="page">
     <h2>สารบัญ</h2>
@@ -61,8 +63,7 @@ $(document).ready(function(){
     var page = $(this).data("page");
     $("#flipbook").turn("page", page);
   });
-});
-</script>
 
-</body>
-</html>
+  // รีไซส์เมื่อเปลี่ยนขนาดหน้าจอ
+  $(window).resize(function(){
+    $("#
