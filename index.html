@@ -3,13 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>สมุดนิทาน Mascot - ปก</title>
+<title>สมุดนิทาน Mascot</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="js/turn.min.js"></script>
 </head>
 <body>
-<div class="page-cover">
-  <img src="images/cover.png" alt="ปกสมุด">
-  <a href="toc.html" class="open-btn">เปิดสมุด</a>
+
+<div id="flipbook">
+
+  <!-- หน้า 1: ปก -->
+  <div class="page cover">
+    <h1>นิทานของ Mascot</h1>
+    <img src="images/cover.jpg" alt="ปกนิทาน">
+    <p>กดเปิดสมุดเพื่อเริ่มอ่าน</p>
+  </div>
+
+  <!-- หน้า 2: สารบัญ -->
+  <div class="page">
+    <h2>สารบัญ</h2>
+    <ul>
+      <li><a href="#" class="go-to" data-page="3">แนะนำตัวละคร (Mascot)</a></li>
+      <li><a href="#" class="go-to" data-page="4">อัลบั้มภาพ + เครดิต</a></li>
+    </ul>
+  </div>
+
+  <!-- หน้า 3: แนะนำ OC -->
+  <div class="page">
+    <h2>แนะนำตัวละคร</h2>
+    <img src="images/mascot1.jpg" alt="Mascot">
+    <p>ชื่อ: นุ่น (Mascot)</p>
+    <p>นักวาด: <a href="https://twitter.com/artist" target="_blank">@artist</a></p>
+  </div>
+
+  <!-- หน้า 4: อัลบั้ม + เครดิต -->
+  <div class="page">
+    <h2>อัลบั้มภาพ</h2>
+    <img src="images/mascot2.jpg" alt="Mascot">
+    <p>นักวาด: <a href="https://twitter.com/artist2" target="_blank">@artist2</a></p>
+    <img src="images/mascot3.jpg" alt="Mascot">
+    <p>นักวาด: <a href="https://twitter.com/artist3" target="_blank">@artist3</a></p>
+  </div>
+
 </div>
+
+<script src="js/main.js"></script>
 </body>
 </html>
