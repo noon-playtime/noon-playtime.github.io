@@ -3,64 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>สมุดนิทาน OC</title>
-
-<!-- CSS -->
+<title>สมุดนิทาน Mascot</title>
 <link rel="stylesheet" href="css/style.css">
 
-<!-- jQuery จำเป็นสำหรับ Turn.js -->
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Turn.js ผ่าน CDN -->
-<script src="https://cdn.jsdelivr.net/gh/blasten/turn.js@4/turn.min.js"></script>
+<!-- Turn.js -->
+<script src="js/turn.min.js"></script>
 </head>
 <body>
 
-<h1 style="text-align:center;">สมุดนิทาน OC</h1>
-
 <div id="flipbook">
   <!-- หน้า 1: ปก -->
-  <div class="page" style="background:#ffe4c4;">หน้าปก<br>คลิกเปิดสมุด</div>
-
+  <div class="page">
+    <img src="images/cover.png" alt="ปกสมุด">
+  </div>
+  
   <!-- หน้า 2: สารบัญ -->
-  <div class="page" style="background:#f0f8ff;">
+  <div class="page">
     <h2>สารบัญ</h2>
     <ul>
-      <li><a href="#story" onclick="goToPage(3)">แนะนำ OC / Story</a></li>
-      <li><a href="#gallery" onclick="goToPage(4)">อัลบั้มภาพ + เครดิตนักวาด</a></li>
+      <li><a href="#" class="goto-page" data-page="3">1. แนะนำ Mascot</a></li>
+      <li><a href="#" class="goto-page" data-page="4">2. อัลบั้มภาพ + เครดิต</a></li>
     </ul>
   </div>
 
-  <!-- หน้า 3: แนะนำ OC / Story -->
-  <div class="page" id="story" style="background:#fafad2;">
-    <h2>OC Story</h2>
-    <p>ตัวละครของฉันเป็น...</p>
+  <!-- หน้า 3: แนะนำ Mascot -->
+  <div class="page">
+    <h2>แนะนำ Mascot</h2>
+    <img src="images/page1.png" alt="Mascot 1">
+    <p>ชื่อ: Puff</p>
+    <p>นักวาด: <a href="#">@artist1</a></p>
   </div>
 
-  <!-- หน้า 4: แกลเลอรี + เครดิต -->
-  <div class="page" id="gallery" style="background:#f0fff0;">
-    <h2>แกลเลอรี + เครดิตนักวาด</h2>
-    <p>ตัวอย่างรูป:</p>
-    <img src="https://picsum.photos/200/150?random=1" alt="Sample Image">
-    <p>Artist: <a href="#" target="_blank">Artist Name</a></p>
+  <!-- หน้า 4: อัลบั้มภาพ + เครดิต -->
+  <div class="page">
+    <h2>อัลบั้มภาพ</h2>
+    <img src="images/page2.png" alt="ภาพเพิ่มเติม">
+    <p>นักวาด: <a href="#">@artist2</a></p>
   </div>
 </div>
 
 <script>
-// ฟังก์ชันเปิดสมุด
 $(document).ready(function(){
+  // เริ่ม Turn.js
   $("#flipbook").turn({
-    width: 600,
-    height: 400,
+    width: $(window).width(),
+    height: $(window).height() * 0.8,
     autoCenter: true,
     display: 'double'
   });
-});
 
-// ฟังก์ชันไปหน้าที่ต้องการ
-function goToPage(n){
-  $("#flipbook").turn("page", n);
-}
+  // คลิกสารบัญไปหน้า
+  $(".goto-page").click(function(e){
+    e.preventDefault();
+    var page = $(this).data("page");
+    $("#flipbook").turn("page", page);
+  });
+});
 </script>
 
 </body>
