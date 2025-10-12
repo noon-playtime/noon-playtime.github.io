@@ -3,67 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>สมุดนิทาน Mascot</title>
-
-<!-- CSS -->
+<title>สมุดนิทาน Mascot - ปก</title>
 <link rel="stylesheet" href="css/style.css">
-
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Turn.js ผ่าน CDN -->
-<script src="https://cdn.jsdelivr.net/gh/blasten/turn.js/turn.min.js"></script>
 </head>
 <body>
-
-<div id="flipbook">
-  <!-- หน้า 1: ปก -->
-  <div class="page">
-    <img src="images/cover.png" alt="ปกสมุด">
-  </div>
-
-  <!-- หน้า 2: สารบัญ -->
-  <div class="page">
-    <h2>สารบัญ</h2>
-    <ul>
-      <li><a href="#" class="goto-page" data-page="3">1. แนะนำ Mascot</a></li>
-      <li><a href="#" class="goto-page" data-page="4">2. อัลบั้มภาพ + เครดิต</a></li>
-    </ul>
-  </div>
-
-  <!-- หน้า 3: แนะนำ Mascot -->
-  <div class="page">
-    <h2>แนะนำ Mascot</h2>
-    <img src="images/page1.png" alt="Mascot 1">
-    <p>ชื่อ: Puff</p>
-    <p>นักวาด: <a href="#">@artist1</a></p>
-  </div>
-
-  <!-- หน้า 4: อัลบั้มภาพ + เครดิต -->
-  <div class="page">
-    <h2>อัลบั้มภาพ</h2>
-    <img src="images/page2.png" alt="ภาพเพิ่มเติม">
-    <p>นักวาด: <a href="#">@artist2</a></p>
-  </div>
+<div class="page-cover">
+  <img src="images/cover.png" alt="ปกสมุด">
+  <a href="toc.html" class="open-btn">เปิดสมุด</a>
 </div>
-
-<script>
-$(document).ready(function(){
-  // เริ่ม Turn.js
-  $("#flipbook").turn({
-    width: $(window).width(),
-    height: $(window).height() * 0.8,
-    autoCenter: true,
-    display: 'double'
-  });
-
-  // คลิกสารบัญไปหน้า
-  $(".goto-page").click(function(e){
-    e.preventDefault();
-    var page = $(this).data("page");
-    $("#flipbook").turn("page", page);
-  });
-
-  // รีไซส์เมื่อเปลี่ยนขนาดหน้าจอ
-  $(window).resize(function(){
-    $("#
+</body>
+</html>
