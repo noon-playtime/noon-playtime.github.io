@@ -3,19 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noon Playtime — ปกนิทาน</title>
+<title>สมุดนิทาน OC</title>
+
+<!-- CSS -->
 <link rel="stylesheet" href="css/style.css">
+
+<!-- Turn.js ผ่าน CDN -->
+<script src="https://cdn.jsdelivr.net/gh/blasten/turn.js@4/turn.min.js"></script>
 </head>
 <body>
-  <div class="cover-page">
-    <img src="https://picsum.photos/600/800?random=1" alt="ปกนิทาน Noon Playtime" class="cover-img">
-    <button id="openBook" class="btn">เปิดสมุดนิทาน</button>
-  </div>
+
+<div id="flipbook" style="width:100%;max-width:600px;margin:auto;">
+  <div class="page" style="background:#fffbf0;">หน้าปก</div>
+  <div class="page" style="background:#fff0f0;">สารบัญ</div>
+  <div class="page" style="background:#f0fff0;">แนะนำ OC / Story</div>
+  <div class="page" style="background:#f0f0ff;">อัลบั้มภาพ + เครดิตนักวาด</div>
+</div>
 
 <script>
-document.getElementById('openBook').addEventListener('click', () => {
-  window.location.href = 'story.html';
+document.addEventListener('DOMContentLoaded', function() {
+  $("#flipbook").turn({
+    width: 600,
+    height: 400,
+    autoCenter: true,
+    display: 'double', // เปิดสองหน้า
+  });
 });
 </script>
+
+<!-- jQuery จำเป็นสำหรับ Turn.js -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </body>
 </html>
