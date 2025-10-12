@@ -1,0 +1,14 @@
+body {
+  font-family: "Sarabun", sans-serif;
+  background: #e0d4c3;
+  margin: 0;
+  padding: 20px;
+}
+
+.page {
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+}
