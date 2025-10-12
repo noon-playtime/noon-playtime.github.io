@@ -8,31 +8,60 @@
 <!-- CSS -->
 <link rel="stylesheet" href="css/style.css">
 
+<!-- jQuery จำเป็นสำหรับ Turn.js -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- Turn.js ผ่าน CDN -->
 <script src="https://cdn.jsdelivr.net/gh/blasten/turn.js@4/turn.min.js"></script>
 </head>
 <body>
 
-<div id="flipbook" style="width:100%;max-width:600px;margin:auto;">
-  <div class="page" style="background:#fffbf0;">หน้าปก</div>
-  <div class="page" style="background:#fff0f0;">สารบัญ</div>
-  <div class="page" style="background:#f0fff0;">แนะนำ OC / Story</div>
-  <div class="page" style="background:#f0f0ff;">อัลบั้มภาพ + เครดิตนักวาด</div>
+<h1 style="text-align:center;">สมุดนิทาน OC</h1>
+
+<div id="flipbook">
+  <!-- หน้า 1: ปก -->
+  <div class="page" style="background:#ffe4c4;">หน้าปก<br>คลิกเปิดสมุด</div>
+
+  <!-- หน้า 2: สารบัญ -->
+  <div class="page" style="background:#f0f8ff;">
+    <h2>สารบัญ</h2>
+    <ul>
+      <li><a href="#story" onclick="goToPage(3)">แนะนำ OC / Story</a></li>
+      <li><a href="#gallery" onclick="goToPage(4)">อัลบั้มภาพ + เครดิตนักวาด</a></li>
+    </ul>
+  </div>
+
+  <!-- หน้า 3: แนะนำ OC / Story -->
+  <div class="page" id="story" style="background:#fafad2;">
+    <h2>OC Story</h2>
+    <p>ตัวละครของฉันเป็น...</p>
+  </div>
+
+  <!-- หน้า 4: แกลเลอรี + เครดิต -->
+  <div class="page" id="gallery" style="background:#f0fff0;">
+    <h2>แกลเลอรี + เครดิตนักวาด</h2>
+    <p>ตัวอย่างรูป:</p>
+    <img src="https://picsum.photos/200/150?random=1" alt="Sample Image">
+    <p>Artist: <a href="#" target="_blank">Artist Name</a></p>
+  </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+// ฟังก์ชันเปิดสมุด
+$(document).ready(function(){
   $("#flipbook").turn({
     width: 600,
     height: 400,
     autoCenter: true,
-    display: 'double', // เปิดสองหน้า
+    display: 'double'
   });
 });
-</script>
 
-<!-- jQuery จำเป็นสำหรับ Turn.js -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+// ฟังก์ชันไปหน้าที่ต้องการ
+function goToPage(n){
+  $("#flipbook").turn("page", n);
+}
+</script>
 
 </body>
 </html>
