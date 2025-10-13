@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>สมุดนิทาน Mascot</title>
-<link rel="stylesheet" href="css/style.css">
-<script src="js/turn.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falgale x Noonea: Celestial Storybook 3D</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=TH+Sarabun+New:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
 
-<div id="flipbook">
+    <button id="open-book-btn">✨ เปิดตำนานดาราจักร ✨</button>
 
-  <!-- หน้า 1: ปก -->
-  <div class="page cover">
-    <h1>นิทานของ Mascot</h1>
-    <img src="images/cover.jpg" alt="ปกนิทาน">
-    <p>กดเปิดสมุดเพื่อเริ่มอ่าน</p>
-  </div>
+    <div id="scene-container">
+        <div id="book-object">
 
-  <!-- หน้า 2: สารบัญ -->
-  <div class="page">
-    <h2>สารบัญ</h2>
-    <ul>
-      <li><a href="#" class="go-to" data-page="3">แนะนำตัวละคร (Mascot)</a></li>
-      <li><a href="#" class="go-to" data-page="4">อัลบั้มภาพ + เครดิต</a></li>
-    </ul>
-  </div>
+            <div id="book-spine"></div> 
 
-  <!-- หน้า 3: แนะนำ OC -->
-  <div class="page">
-    <h2>แนะนำตัวละคร</h2>
-    <img src="images/mascot1.jpg" alt="Mascot">
-    <p>ชื่อ: นุ่น (Mascot)</p>
-    <p>นักวาด: <a href="https://twitter.com/artist" target="_blank">@artist</a></p>
-  </div>
+            <div id="page-1" class="page right-page" data-page="1">
+                <img src="assets/images/cover.jpg" alt="ปกหน้า Celestial" class="page-image">
+                <h1 class="book-title">Falgale x Noonea</h1>
+                <p class="book-subtitle">The Tale of the Star Weaver</p>
+            </div>
 
-  <!-- หน้า 4: อัลบั้ม + เครดิต -->
-  <div class="page">
-    <h2>อัลบั้มภาพ</h2>
-    <img src="images/mascot2.jpg" alt="Mascot">
-    <p>นักวาด: <a href="https://twitter.com/artist2" target="_blank">@artist2</a></p>
-    <img src="images/mascot3.jpg" alt="Mascot">
-    <p>นักวาด: <a href="https://twitter.com/artist3" target="_blank">@artist3</a></p>
-  </div>
+            <div id="page-2" class="page left-page" data-page="2">
+                <h2 class="chapter-title">บทที่ 1</h2>
+                <p class="story-text"><span class="first-letter">ณ</span> กลางดาราจักรอันเงียบสงบ OC ผู้แบกรับดวงดาวไว้บนบ่า ได้โบยบินอย่างสง่างาม สายลมสุริยะพัดพาความทรงจำแห่งอดีตกาล ให้เขาต้องเผชิญหน้ากับความมืดมิดที่รออยู่เบื้องหน้า...</p>
+                <img src="assets/images/page_01_oc.jpg" alt="OC ประกอบ" class="content-image">
+            </div>
 
-</div>
+            <div id="page-3" class="page right-page" data-page="3">
+                <h2 class="chapter-title">บทที่ 2</h2>
+                <p class="story-text">การเดินทางอันยาวนานสู่ใจกลางเนบิวลาสีม่วงเข้มเริ่มต้นขึ้น แสงสีทองจากรอยแยกของจักรวาลสาดส่อง นำทางผู้กล้าหาญให้ก้าวข้ามผ่าน... </p>
+                <img src="assets/images/page_02_oc.jpg" alt="OC ประกอบ" class="content-image">
+            </div>
 
-<script src="js/main.js"></script>
+             <div id="page-4" class="page left-page back-cover" data-page="4">
+                <h2 class="chapter-title">END</h2>
+                <p class="story-text">ขอขอบคุณที่ร่วมเดินทางในตำนานดาราจักรนี้...</p>
+            </div>
+
+            </div>
+    </div>
+
 </body>
 </html>
