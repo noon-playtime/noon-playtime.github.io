@@ -1,31 +1,31 @@
 :root {
     --book-width-ratio: 3;
     --book-height-ratio: 4;
-    --celestial-dark: #0A0A1F; /* น้ำเงินกรมท่าเข้ม */
-    --celestial-gold: #FFD700; /* สีทอง */
-    --celestial-light: #E0E0E0; /* ขาวอ่อน/เงิน */
+    --celestial-dark: #0A0A1F; /* Deep Navy/Indigo */
+    --celestial-gold: #FFD700; /* Gold Color */
+    --celestial-light: #E0E0E0; /* Off-White/Silver */
+    --spine-width: 20px; /* Book thickness */
 }
 
-/* ธีม Celestial Background */
+/* Base Celestial Theme */
 body {
     margin: 0;
-    padding: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: var(--celestial-dark);
-    /* เพิ่มภาพพื้นหลังเนบิวลา (สมมติว่าคุณมีไฟล์ชื่อ nebula.jpg) */
+    /* Placeholder for nebula background */
     background-image: url('assets/images/nebula.jpg'); 
     background-size: cover;
     background-attachment: fixed;
-    overflow-x: hidden; /* ป้องกันการเลื่อนแนวนอน */
+    overflow-x: hidden; 
     color: var(--celestial-light);
     font-family: 'TH Sarabun New', sans-serif;
 }
 
-/* ปุ่มเปิดหนังสือ */
+/* Open Book Button */
 #open-book-btn {
     position: absolute;
     top: 5vh;
@@ -37,114 +37,106 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
-    z-index: 100;
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.7);
+    z-index: 1000; /* Ensure button is always clickable */
 }
 
 /* 3D Scene Setup */
 #scene-container {
-    /* ใช้ perspective เพื่อให้เห็นมุมมอง 3D */
-    perspective: 2000px;
+    perspective: 2500px; /* Strong 3D perspective */
     perspective-origin: center center;
     position: relative;
+    /* This container determines where the book sits */
 }
 
-/* Book Container - ใช้หลักการ Responsive 3:4 */
+/* Book Container - Responsive 3:4 Aspect Ratio */
 #book-object {
-    /* กำหนดความกว้างยืดหยุ่น */
-    width: 80vw; 
-    /* ล็อคสัดส่วน 3:4 (สูง 4 / กว้าง 3) โดยใช้ Aspect Ratio Hack */
+    width: 80vw; /* Flexible width based on viewport */
+    /* Aspect Ratio Hack: (Height / Width) * Viewport Width */
     padding-bottom: calc(var(--book-height-ratio) / var(--book-width-ratio) * 80vw); 
-    height: 0; /* ต้องกำหนดเป็น 0 */
-    max-width: 1000px; /* จำกัดขนาดสูงสุด */
+    height: 0; 
+    max-width: 1000px; /* Max size on large screens */
     
     position: relative;
-    transform-style: preserve-3d; /* สำคัญสำหรับ 3D */
-    /* สถานะเริ่มต้นจะถูกกำหนดใน script.js (วางเฉียง) */
+    transform-style: preserve-3d; /* CRITICAL for 3D flip */
 }
 
-/* Page Style (ใช้ 1 แผ่นต่อ 50% ของ Book Container) */
+/* Page Style (1 Page = 50% of Book Container) */
 .page {
     position: absolute;
-    width: 50%; /* 1 หน้า = ครึ่งเดียวของความกว้าง Book Container */
+    width: 50%; /* 100% of the book width is spread across two pages (50% each) */
     height: 100%;
-    /* พื้นหลังกระดาษ */
+    /* Paper texture/color */
     background-color: rgba(255, 255, 255, 0.05); 
-    border: 1px solid rgba(255, 215, 0, 0.2); /* ขอบทองจางๆ */
-    padding: 3%; /* Safe Zone Padding */
+    border: 1px solid rgba(255, 215, 0, 0.1); 
+    padding: 5%; /* Safe Zone Padding (5% of page width/height) */
     box-sizing: border-box;
-    overflow: hidden; /* ซ่อนเนื้อหาที่เกินขอบ */
+    overflow: hidden; 
 }
 
-/* การจัดวางหน้าซ้ายและขวา */
+/* Anchor Points for Flipping */
 .right-page {
     right: 0;
-    transform-origin: left center; /* พลิกจากสันหนังสือด้านซ้าย */
+    /* Flips from the left spine edge */
+    transform-origin: left center; 
 }
 
 .left-page {
     left: 0;
-    transform-origin: right center; /* พลิกจากสันหนังสือด้านขวา */
+    /* Flips from the right spine edge */
+    transform-origin: right center; 
 }
 
-/* ปกหน้า (ต้องซ้อนทับหน้า 2) */
-#page-1 {
-    z-index: 2; 
-    background-color: var(--celestial-dark);
-}
-/* หน้าเนื้อหา (อยู่ใต้ปกหน้า) */
-#page-2 {
-    z-index: 1; 
-}
-/* หน้า 3 (สำหรับพลิกครั้งแรก) */
-#page-3 {
-    z-index: 3; 
-}
+/* Initial Z-Index Stacking */
+#page-1 { z-index: 100; } 
+#page-2 { z-index: 99; } /* First content page sits directly under the cover */
+#page-3 { z-index: 98; } 
+#page-4 { z-index: 97; }
 
-/* สันหนังสือ 3D (Spine) */
+/* 3D Spine */
 #book-spine {
     position: absolute;
-    width: 20px; /* ความหนา */
+    width: var(--spine-width); 
     height: 100%;
     left: 50%;
     top: 0;
-    transform: translateX(-50%) rotateY(90deg) translateZ(-10px); 
+    transform: translateX(-50%) rotateY(90deg) translateZ(calc(var(--spine-width) / 2 * -1)); 
     transform-origin: center center;
-    background-color: #5D4037; /* สีน้ำตาลเข้ม */
-    background-image: url('assets/images/gold_texture_spine.jpg'); /* Texture สันหนังสือ */
+    background-color: #5D4037; 
+    background-image: url('assets/images/gold_texture_spine.jpg'); /* Gold texture placeholder */
     background-size: cover;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
-    z-index: 10;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    z-index: 200;
 }
 
-/* Typography (Elegant & Celestial) */
+/* Typography & Image Scaling */
 .book-title {
     font-family: 'Playfair Display', serif;
     color: var(--celestial-gold);
-    font-size: clamp(2rem, 5vw, 4rem);
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
     text-align: center;
-    margin-top: 5vh;
+    margin-top: 10vh;
 }
 .story-text {
-    font-family: 'TH Sarabun New', sans-serif;
     font-size: clamp(1rem, 2vw, 1.4rem);
     line-height: 1.6;
     color: var(--celestial-light);
-}
-.content-image {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin-top: 20px;
-    border: 1px solid rgba(255, 215, 0, 0.2);
+    margin-top: 1em;
 }
 .page-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* ครอบคลุมพื้นที่ปก */
+    object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: -1; /* ให้ข้อความอยู่เหนือรูปปก */
+    z-index: -1; 
+}
+.content-image {
+    max-width: 90%;
+    height: auto;
+    display: block;
+    margin: 20px auto 0;
+    border: 2px solid rgba(255, 215, 0, 0.3);
 }
