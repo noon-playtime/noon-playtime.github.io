@@ -1,142 +1,102 @@
-:root {
-    --book-width-ratio: 3;
-    --book-height-ratio: 4;
-    --celestial-dark: #0A0A1F; /* Deep Navy/Indigo */
-    --celestial-gold: #FFD700; /* Gold Color */
-    --celestial-light: #E0E0E0; /* Off-White/Silver */
-    --spine-width: 20px; /* Book thickness */
-}
-
-/* Base Celestial Theme */
 body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--celestial-dark);
-    /* Placeholder for nebula background */
-    background-image: url('assets/images/nebula.jpg'); 
-    background-size: cover;
-    background-attachment: fixed;
-    overflow-x: hidden; 
-    color: var(--celestial-light);
-    font-family: 'TH Sarabun New', sans-serif;
+  margin:0;
+  padding:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(180deg,#eaf3ff,#fef8ff);
+  perspective:2000px;
+  overflow:hidden;
+  font-family:'Segoe UI', sans-serif;
 }
 
-/* Open Book Button */
-#open-book-btn {
-    position: absolute;
-    top: 5vh;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    font-family: 'Playfair Display', serif;
-    background-color: var(--celestial-gold);
-    color: var(--celestial-dark);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.7);
-    z-index: 1000; /* Ensure button is always clickable */
+.book {
+  position: relative;
+  width:800px;
+  height:600px;
+  transform-style: preserve-3d;
+  transform: rotateY(10deg) rotateX(5deg);
 }
 
-/* 3D Scene Setup */
-#scene-container {
-    perspective: 2500px; /* Strong 3D perspective */
-    perspective-origin: center center;
-    position: relative;
-    /* This container determines where the book sits */
+/* ปกหน้า */
+.cover {
+  width:400px;
+  height:600px;
+  border-radius:12px;
+  position:absolute;
+  top:50%;
+  left:55%; /* ค่อนไปทางขวา */
+  transform:translate(-50%,-50%) rotateY(10deg) rotateZ(-5deg);
+  box-shadow:6px 6px 25px rgba(0,0,0,0.35),
+             inset 0 5px 10px rgba(0,0,0,0.2),
+             inset 0 -5px 10px rgba(255,255,255,0.15);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
+  font-size:36px;
+  color:white;
+  cursor:pointer;
+  backface-visibility:hidden;
+  z-index:100;
+  transform-origin:left center;
 }
 
-/* Book Container - Responsive 3:4 Aspect Ratio */
-#book-object {
-    width: 80vw; /* Flexible width based on viewport */
-    /* Aspect Ratio Hack: (Height / Width) * Viewport Width */
-    padding-bottom: calc(var(--book-height-ratio) / var(--book-width-ratio) * 80vw); 
-    height: 0; 
-    max-width: 1000px; /* Max size on large screens */
-    
-    position: relative;
-    transform-style: preserve-3d; /* CRITICAL for 3D flip */
-}
-
-/* Page Style (1 Page = 50% of Book Container) */
+/* หน้า */
 .page {
-    position: absolute;
-    width: 50%; /* 100% of the book width is spread across two pages (50% each) */
-    height: 100%;
-    /* Paper texture/color */
-    background-color: rgba(255, 255, 255, 0.05); 
-    border: 1px solid rgba(255, 215, 0, 0.1); 
-    padding: 5%; /* Safe Zone Padding (5% of page width/height) */
-    box-sizing: border-box;
-    overflow: hidden; 
+  width:400px;
+  height:600px;
+  background:white;
+  border-radius:12px;
+  box-shadow:2px 2px 18px rgba(0,0,0,0.15);
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:32px;
+  color:#444;
+  border:1px solid #ddd;
+  backface-visibility:hidden;
+  visibility:hidden;
+  transform-origin:left center;
+  z-index:10;
 }
 
-/* Anchor Points for Flipping */
-.right-page {
-    right: 0;
-    /* Flips from the left spine edge */
-    transform-origin: left center; 
+/* Buttons */
+#openBtn {
+  position: fixed;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:12px 30px;
+  font-size:20px;
+  border:none;
+  border-radius:30px;
+  background: linear-gradient(135deg,#8ec5fc,#e0c3fc);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  z-index:30;
 }
 
-.left-page {
-    left: 0;
-    /* Flips from the right spine edge */
-    transform-origin: right center; 
+.navBtn {
+  position: fixed;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:60px;
+  color:#555;
+  background:none;
+  border:none;
+  cursor:pointer;
+  opacity:0;
+  transition:opacity 0.5s;
+  z-index:50;
 }
-
-/* Initial Z-Index Stacking */
-#page-1 { z-index: 100; } 
-#page-2 { z-index: 99; } /* First content page sits directly under the cover */
-#page-3 { z-index: 98; } 
-#page-4 { z-index: 97; }
-
-/* 3D Spine */
-#book-spine {
-    position: absolute;
-    width: var(--spine-width); 
-    height: 100%;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%) rotateY(90deg) translateZ(calc(var(--spine-width) / 2 * -1)); 
-    transform-origin: center center;
-    background-color: #5D4037; 
-    background-image: url('assets/images/gold_texture_spine.jpg'); /* Gold texture placeholder */
-    background-size: cover;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    z-index: 200;
-}
-
-/* Typography & Image Scaling */
-.book-title {
-    font-family: 'Playfair Display', serif;
-    color: var(--celestial-gold);
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-    text-align: center;
-    margin-top: 10vh;
-}
-.story-text {
-    font-size: clamp(1rem, 2vw, 1.4rem);
-    line-height: 1.6;
-    color: var(--celestial-light);
-    margin-top: 1em;
-}
-.page-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1; 
-}
-.content-image {
-    max-width: 90%;
-    height: auto;
-    display: block;
-    margin: 20px auto 0;
-    border: 2px solid rgba(255, 215, 0, 0.3);
-}
+#prevBtn { left:10px; }
+#nextBtn { right:10px; }
+.navBtn.visible { opacity:1; }
