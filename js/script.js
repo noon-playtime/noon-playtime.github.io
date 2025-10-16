@@ -1,80 +1,51 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const bookObject = document.getElementById('book-object');
-    const openBtn = document.getElementById('open-book-btn');
-    const pages = document.querySelectorAll('.page'); // All pages
-    
-    let isOpened = false;
-    let currentPageIndex = 1; // Current visible page (starts on the cover)
+const frontCover = document.getElementById('frontCover');
+const page1 = document.getElementById('page1');
+const page2 = document.getElementById('page2');
+const openBtn = document.getElementById('openBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 
-    // --- 1. Initial State: Tilting the book for a realistic look ---
-    gsap.set(bookObject, {
-        rotationX: 8,   // Slightly tilted up
-        rotationY: -15, // Tilted to the left (viewing the spine side)
-        z: -150,        // Pushed back slightly
-        scale: 0.9,     // Scaled down
-        transformOrigin: "center center"
-    });
-    
-    // --- Helper Function: Flips any page element ---
-    function flipPage(pageElement, targetRotationY, duration = 1.8, zIndex = 50) {
-        gsap.to(pageElement, {
-            duration: duration, 
-            rotationY: targetRotationY, 
-            z: zIndex, 
-            ease: "power4.inOut" // Smooth, professional easing
-        });
-    }
+let pageIndex = 0; // 0 = หน้า1+2 แรก, 1 = flip หน้า
 
-    // --- 2. Main Open/Flip Logic ---
-    openBtn.addEventListener('click', () => {
-        if (!isOpened) {
-            // First time: Open the book from the tilted state
-            const openTL = gsap.timeline({ onComplete: () => {
-                isOpened = true;
-                currentPageIndex = 2; // Now viewing pages 2 & 3
-                openBtn.textContent = '>> หน้าถัดไป >>';
-            }});
-            
-            // 1. Straighten and Zoom the book object
-            openTL.to(bookObject, {
-                duration: 1.5,
-                rotationX: 0,
-                rotationY: 0,
-                z: 0,
-                scale: 1,
-                ease: "expo.out" 
-            });
-            
-            // 2. Flip the cover (Page 1) over
-            openTL.to(pages[0], { // pages[0] is #page-1 (cover)
-                duration: 1.5,
-                rotationY: -180, 
-                z: 5, // Ensures it flips clearly over the spine
-                ease: "power4.inOut",
-            }, 0.5); // Start the flip animation after the book starts to straighten
-            
-        } else {
-            // Subsequent Clicks: Flip to the next page spread
-            const pageToFlip = document.getElementById(`page-${currentPageIndex + 1}`);
-            
-            if (pageToFlip) {
-                // Determine if it's a left or right page flip
-                const isRightPage = pageToFlip.classList.contains('right-page');
-                const targetRotation = isRightPage ? -180 : 180;
-                
-                flipPage(pageToFlip, targetRotation, 1.2, 50 + currentPageIndex); // Flip it!
-                
-                currentPageIndex += 2; // Advance by 2 pages (the spread)
-                
-                // Example: Toggle button text for demonstration
-                if (currentPageIndex >= pages.length) {
-                    openBtn.textContent = '...จบตำนาน...';
-                    openBtn.disabled = true;
-                }
-            } else {
-                openBtn.textContent = 'จบตำนานแล้ว';
-                openBtn.disabled = true;
-            }
-        }
-    });
+// เปิดหนังสือ
+openBtn.addEventListener('click', () => {
+  // ปกหมุนไปฝั่งซ้าย
+  gsap.to(frontCover, {duration:1, rotateY:-180, ease:"power2.inOut"});
+
+  // ซ่อนปุ่มเปิด
+  gsap.to(openBtn,{duration:0.5, opacity:0, pointerEvents:"none"});
+
+  // แสดงหน้า1+2
+  setTimeout(() => {
+    page1.style.visibility='visible';
+    page1.style.left='calc(50% - 200px)'; // ฝั่งซ้าย
+    page1.style.transformOrigin='right center';
+    page1.style.zIndex=101;
+
+    page2.style.visibility='visible';
+    page2.style.left='calc(50% + 200px)'; // ฝั่งขวา
+    page2.style.transformOrigin='left center';
+    page2.style.zIndex=100;
+
+    // แสดงปุ่มนำทาง
+    prevBtn.classList.add('visible');
+    nextBtn.classList.add('visible');
+  }, 800);
+});
+
+// พลิกไปหน้า 2
+nextBtn.addEventListener('click', () => {
+  if(pageIndex===0){
+    // หน้า1 พลิกไปฝั่งซ้ายทับปก
+    gsap.to(page1, {duration:1, rotateY:-180, transformOrigin:'right center', ease:"power2.inOut", zIndex:50});
+    pageIndex++;
+  }
+});
+
+// พลิกกลับ
+prevBtn.addEventListener('click', () => {
+  if(pageIndex===1){
+    gsap.to(page1, {duration:1, rotateY:0, transformOrigin:'right center', ease:"power2.inOut", zIndex:101});
+    pageIndex--;
+  }
 });
